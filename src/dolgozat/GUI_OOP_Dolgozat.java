@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -21,7 +22,8 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
     /**
      * Creates new form GUI_OOP_Dolgozat
      */
-    
+    private String pinVissza;
+    private JButton[] pinButtons;
     
     public GUI_OOP_Dolgozat() {
         initComponents();
@@ -62,7 +64,7 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
         mnuRdbVizszint = new javax.swing.JRadioButtonMenuItem();
         mnuRdbFuggoleges = new javax.swing.JRadioButtonMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("GUI- OOP 1. dolgozat");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -226,6 +228,11 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
         mnuProgram.setText("Program");
 
         mnuItemUjra.setText("Újra");
+        mnuItemUjra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemUjraActionPerformed(evt);
+            }
+        });
         mnuProgram.add(mnuItemUjra);
 
         mnuItemKilep.setText("Kilépés");
@@ -274,7 +281,7 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chkKeverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkKeverActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_chkKeverActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -288,6 +295,10 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
     private void mnuItemKilepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemKilepActionPerformed
         kilepes();
     }//GEN-LAST:event_mnuItemKilepActionPerformed
+
+    private void mnuItemUjraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemUjraActionPerformed
+        txtPin.setText("");
+    }//GEN-LAST:event_mnuItemUjraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,7 +364,7 @@ public class GUI_OOP_Dolgozat extends javax.swing.JFrame {
 private void PinGombokFeltolt(){
     LayoutManager pinGrid = new GridLayout(4, 3);
     jpnPin.setLayout(pinGrid);
-    JButton[] pinButtons = new JButton[10];
+    pinButtons = new JButton[10];
     String txt = "";
     int szamlalo = 1;
     for (int i = 0; i < pinButtons.length; i++) {
@@ -364,16 +375,17 @@ private void PinGombokFeltolt(){
             txt += szamlalo;
         }
         pinButtons[i] = new JButton(txt);
-        jpnPin.add(pinButtons[i]);
-        szamlalo++;
-        chkKever.addActionListener(new ActionListener() {
+        pinVissza = "";
+        pinButtons[i].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (chkKever.isSelected()) {
-                    
-                }
+                JButton gomb = (JButton)e.getSource();
+                pinVissza += gomb.getText();
+                txtPin.setText(pinVissza);
             }
         });
+        jpnPin.add(pinButtons[i]);
+        szamlalo++;
     }
 }
 
